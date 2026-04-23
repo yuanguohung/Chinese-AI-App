@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Settings, BookOpen, MessageCircle, PenTool, ChevronLeft, Send, Sparkles, X, Loader2 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 import { createAiClient, chatWithAI } from './services/aiService';
 import './index.css';
 
@@ -62,7 +63,7 @@ function App() {
     setIsLoading(true);
 
     try {
-  const client = createAiClient(apiKey, baseURL);
+      const client = createAiClient(apiKey, baseURL);
       const systemMessage = {
         role: 'system',
         content: 'You are a helpful Chinese learning assistant. Your answers must be short and educational. You can communicate in both Vietnamese and Chinese. When the user speaks Chinese, correct their grammar if necessary.'
@@ -258,7 +259,11 @@ function App() {
             <div className="chat-messages">
               {messages.map((msg, idx) => (
                 <div key={idx} className={`message ${msg.role === 'user' ? 'user' : 'ai'}`}>
-                  {msg.content}
+                  {msg.role === 'assistant' ? (
+                    <ReactMarkdown>{msg.content}</ReactMarkdown>
+                  ) : (
+                    msg.content
+                  )}
                 </div>
               ))}
               {isLoading && (
