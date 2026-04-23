@@ -7,7 +7,7 @@ function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [apiKey, setApiKey] = useState(localStorage.getItem('ai_api_key') || '');
-  const [model, setModel] = useState(localStorage.getItem('ai_model') || 'openai/gpt-oss-120b');
+  const [model, setModel] = useState(localStorage.getItem('ai_model') || 'qwen/qwen3-32b');
   const [baseURL, setBaseURL] = useState(localStorage.getItem('ai_base_url') || 'https://api.groq.com/openai/v1'); // Set default to Groq
 
   // Auto-fix base URL for Groq
