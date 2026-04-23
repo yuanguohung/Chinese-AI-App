@@ -62,14 +62,14 @@ function App() {
     setIsLoading(true);
 
     try {
-    const client = createAiClient(apiKey, baseURL);
+  const client = createAiClient(apiKey, baseURL);
       const systemMessage = {
         role: 'system',
         content: 'You are a helpful Chinese learning assistant. Your answers must be short and educational. You can communicate in both Vietnamese and Chinese. When the user speaks Chinese, correct their grammar if necessary.'
       };
 
       const responseContent = await chatWithAI(client, [systemMessage, ...newMessages], model);
-      const cleanContent = responseContent.replace(/<thinking>[\s\S]*?<\/thinking>/gi, '').trim();
+      const cleanContent = responseContent.replace(/<(think|thinking)>[\s\S]*?<\/\1>/gi, '').trim();
 
       setMessages([...newMessages, { role: 'assistant', content: cleanContent }]);
     } catch (error) {
