@@ -318,6 +318,33 @@ input:focus, textarea:focus, select:focus {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Markdown styling inside AI messages */
+.message.ai h1, .message.ai h2, .message.ai h3 {
+  margin: 1rem 0 0.5rem 0;
+  color: var(--text-primary);
+}
+.message.ai p {
+  margin-bottom: 0.75rem;
+}
+.message.ai p:last-child {
+  margin-bottom: 0;
+}
+.message.ai ul, .message.ai ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+.message.ai li {
+  margin-bottom: 0.4rem;
+}
+.message.ai strong {
+  color: var(--secondary-color);
+}
+.message.ai hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 1rem 0;
+}
+
 .chat-input-area {
   display: flex;
   gap: 1rem;
