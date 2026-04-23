@@ -62,15 +62,16 @@ function App() {
     setIsLoading(true);
 
     try {
-      const client = createAiClient(apiKey, baseURL);
+    const client = createAiClient(apiKey, baseURL);
       const systemMessage = {
         role: 'system',
-        content: 'Bạn là trợ lý học tiếng Trung chuyên nghiệp. Hãy trả lời ngắn gọn, tập trung vào kiến thức. Luôn trả lời bằng tiếng Việt và giải thích bằng tiếng Trung. Tuyệt đối không hiển thị quá trình suy nghĩ (thinking process) ra ngoài.'
+        content: 'You are a helpful Chinese learning assistant. Your answers must be short and educational. You can communicate in both Vietnamese and Chinese. When the user speaks Chinese, correct their grammar if necessary.'
       };
 
       const responseContent = await chatWithAI(client, [systemMessage, ...newMessages], model);
+      const cleanContent = responseContent.replace(/<thinking>[\s\S]*?<\/thinking>/gi, '').trim();
 
-      setMessages([...newMessages, { role: 'assistant', content: responseContent }]);
+      setMessages([...newMessages, { role: 'assistant', content: cleanContent }]);
     } catch (error) {
       setMessages([...newMessages, { role: 'assistant', content: `[Lỗi hệ thống]: ${error.message}. Hãy kiểm tra lại API Key hoặc Base URL trong Cài đặt.` }]);
     } finally {
