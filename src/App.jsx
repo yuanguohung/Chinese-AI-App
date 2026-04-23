@@ -93,7 +93,7 @@ function App() {
       "hanzi" (Chinese characters), 
       "pinyin" (Pinyin), 
       "meaning" (Vietnamese translation), 
-      "example" (A short Chinese example sentence containing the word). 
+      "example" (A short Chinese example sentence containing the word,pinyin,meaning (Vietnamese)). 
       Return ONLY the JSON array without markdown backticks.`;
 
       const responseContent = await chatWithAI(client, [{ role: 'user', content: prompt }], model);
