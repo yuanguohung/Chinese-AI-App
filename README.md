@@ -1,16 +1,52 @@
-# React + Vite
+# 🏮 AI Chinese Learning Assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Một ứng dụng web học tiếng Trung hiện đại, tích hợp trí tuệ nhân tạo (AI) để giúp bạn nâng cao kỹ năng giao tiếp, từ vựng và ngữ pháp một cách nhanh chóng.
 
-Currently, two official plugins are available:
+![UI Design](https://img.shields.io/badge/Design-Glassmorphism-pink)
+![Tech Stack](https://img.shields.io/badge/Stack-React%20%2B%20Vite-blue)
+![AI Powered](https://img.shields.io/badge/AI-Custom%20Model-purple)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Tính năng nổi bật
 
-## React Compiler
+- 💬 **Luyện Giao Tiếp AI**: Trò chuyện trực tiếp với trợ lý AI bằng tiếng Trung. AI sẽ tự động sửa lỗi và phản hồi bằng cả tiếng Trung lẫn tiếng Việt.
+- 📖 **Học Từ Vựng (Flashcards)**: Tạo bộ thẻ từ vựng thông minh theo bất kỳ chủ đề nào bạn yêu cầu (Trái cây, công việc, du lịch...). Thẻ có hiệu ứng lật 3D kèm ví dụ thực tế.
+- ✍️ **Sửa Lỗi Ngữ Pháp**: Phân tích chuyên sâu các câu tiếng Trung bạn viết, chỉ ra lỗi sai và giải thích chi tiết cách sửa bằng tiếng Việt.
+- 🎨 **Giao diện Premium**: Thiết kế theo phong cách Glassmorphism hiện đại, hỗ trợ Dark Mode và hoàn toàn tương thích với các thiết bị di động (Android/iOS).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Công nghệ sử dụng
 
-## Expanding the ESLint configuration
+- **Frontend**: React.js, Vite
+- **Styling**: Vanilla CSS (Custom Glassmorphism Design System)
+- **AI Integration**: OpenAI SDK (Tương thích với Groq, OpenRouter, Glhf.chat...)
+- **Icons**: Lucide React
+- **Formatting**: React Markdown
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Cài đặt và Chạy thử
+
+### 1. Cài đặt môi trường
+Đảm bảo bạn đã cài đặt [Node.js](https://nodejs.org/).
+
+### 2. Cài đặt dependencies
+Mở Terminal trong thư mục dự án và chạy:
+```bash
+npm install
+```
+
+### 3. Chạy ứng dụng locally
+```bash
+npm run dev
+```
+Sau đó truy cập địa chỉ `http://localhost:5173`.
+
+### 4. Cấu hình API Key
+Mở ứng dụng, nhấn vào nút **Cài đặt API** ở góc trên bên phải để nhập API Key và cấu hình Model của bạn.
+
+## 🌐 Triển khai (Deployment)
+
+Dự án đã sẵn sàng để triển khai lên **Vercel**:
+```bash
+npx vercel --prod
+```
+
+---
+*Phát triển bởi Antigravity AI Assistant.*
