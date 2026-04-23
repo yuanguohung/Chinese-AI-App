@@ -65,7 +65,7 @@ function App() {
       const client = createAiClient(apiKey, baseURL);
       const systemMessage = {
         role: 'system',
-        content: 'You are a helpful Chinese learning assistant. Your answers must be short and educational. You can communicate in both Vietnamese and Chinese. When the user speaks Chinese, correct their grammar if necessary.'
+        content: 'Bạn là trợ lý học tiếng Trung chuyên nghiệp. Hãy trả lời ngắn gọn, tập trung vào kiến thức. Luôn trả lời bằng tiếng Việt và giải thích bằng tiếng Trung. Tuyệt đối không hiển thị quá trình suy nghĩ (thinking process) ra ngoài.'
       };
 
       const responseContent = await chatWithAI(client, [systemMessage, ...newMessages], model);
