@@ -2,6 +2,8 @@
 
 Một ứng dụng web học tiếng Trung hiện đại, tích hợp trí tuệ nhân tạo (AI) để giúp bạn nâng cao kỹ năng giao tiếp, từ vựng và ngữ pháp một cách nhanh chóng.
 
+👉 **Live Demo:** [https://chinese-ai-app.vercel.app/](https://chinese-ai-app.vercel.app/)
+
 ![UI Design](https://img.shields.io/badge/Design-Glassmorphism-pink)
 ![Tech Stack](https://img.shields.io/badge/Stack-React%20%2B%20Vite-blue)
 ![AI Powered](https://img.shields.io/badge/AI-Custom%20Model-purple)
@@ -41,12 +43,3 @@ Sau đó truy cập địa chỉ `http://localhost:5173`.
 ### 4. Cấu hình API Key
 Mở ứng dụng, nhấn vào nút **Cài đặt API** ở góc trên bên phải để nhập API Key và cấu hình Model của bạn.
 
-## 🌐 Triển khai (Deployment)
-
-Dự án đã sẵn sàng để triển khai lên **Vercel**:
-```bash
-npx vercel --prod
-```
-
----
-*Phát triển bởi Antigravity AI Assistant.*
