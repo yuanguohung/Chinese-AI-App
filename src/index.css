@@ -345,6 +345,47 @@ input:focus, textarea:focus, select:focus {
   margin: 1rem 0;
 }
 
+/* Speech Buttons */
+.speak-btn, .speak-btn-small, .speak-btn-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--secondary-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+}
+
+.speak-btn:hover, .speak-btn-small:hover, .speak-btn-card:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: scale(1.1);
+}
+
+.speak-btn {
+  width: 36px;
+  height: 36px;
+}
+
+.speak-btn-small {
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+}
+
+.speak-btn-card {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  z-index: 10;
+}
+
 .chat-input-area {
   display: flex;
   gap: 1rem;
@@ -366,6 +407,7 @@ input:focus, textarea:focus, select:focus {
 .delay-1 { animation-delay: 0.1s; opacity: 0; }
 .delay-2 { animation-delay: 0.2s; opacity: 0; }
 .delay-3 { animation-delay: 0.3s; opacity: 0; }
+.delay-4 { animation-delay: 0.4s; opacity: 0; }
 
 @keyframes spin {
   from { transform: rotate(0deg); }
