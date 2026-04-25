@@ -1,11 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Manrope:wght@300;400;500;600&display=swap');
 
 :root {
   --bg-color: #09090b;
   --surface-color: rgba(24, 24, 27, 0.7);
-  --primary-color: #3b82f6; /* Blue */
-  --secondary-color: #ec4899; /* Pink */
-  --tertiary-color: #8b5cf6; /* Violet */
+  --primary-color: #3b82f6;
+  /* Blue */
+  --secondary-color: #ec4899;
+  /* Pink */
+  --tertiary-color: #8b5cf6;
+  /* Violet */
   --text-primary: #fafafa;
   --text-secondary: #a1a1aa;
   --border-color: rgba(255, 255, 255, 0.08);
@@ -21,7 +24,7 @@
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Manrope', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-primary);
   min-height: 100vh;
@@ -30,7 +33,8 @@ body {
 }
 
 /* Animated Background Blobs */
-body::before, body::after {
+body::before,
+body::after {
   content: '';
   position: fixed;
   border-radius: 50%;
@@ -58,23 +62,37 @@ body::after {
 }
 
 @keyframes floatBlobs {
-  0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(5%, 5%) scale(1.1); }
-  66% { transform: translate(-5%, 10%) scale(0.9); }
-  100% { transform: translate(0, -5%) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(5%, 5%) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-5%, 10%) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0, -5%) scale(1);
+  }
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-color);
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.4);
 }
@@ -86,10 +104,14 @@ body::after {
 }
 
 /* Typography */
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
 }
 
 h1 {
@@ -97,16 +119,17 @@ h1 {
   font-weight: 800;
   background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
 }
 
 /* Layout */
 .app-container {
-  max-width: 1200px;
+  max-width: 1500px;
+  width: 92%;
   margin: 0 auto;
   padding: 2rem;
-  width: 100%;
 }
 
 .header {
@@ -136,8 +159,11 @@ h1 {
 .glass-card::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
 }
 
 .glass-card:hover {
@@ -149,9 +175,21 @@ h1 {
 /* Feature Grid */
 .feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2.5rem;
   margin-top: 2rem;
+}
+
+@media (max-width: 1200px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .feature-card {
@@ -163,6 +201,16 @@ h1 {
   padding: 2rem;
 }
 
+.feature-card h3 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
 .feature-icon-wrapper {
   padding: 1.25rem;
   border-radius: 20px;
@@ -172,7 +220,7 @@ h1 {
   align-items: center;
   justify-content: center;
   transition: all 0.4s ease;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .feature-card:hover .feature-icon-wrapper {
@@ -195,7 +243,9 @@ h1 {
   color: var(--text-primary);
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   width: 100%;
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid var(--border-color);
@@ -206,12 +256,14 @@ input, textarea, select {
   font-size: 1rem;
   transition: all 0.3s ease;
   outline: none;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   border-color: var(--primary-color);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 0 0 3px rgba(59, 130, 246, 0.2);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(59, 130, 246, 0.2);
   background: rgba(0, 0, 0, 0.4);
 }
 
@@ -238,8 +290,11 @@ input:focus, textarea:focus, select:focus {
 .btn::after {
   content: '';
   position: absolute;
-  top: 0; left: -100%; width: 50%; height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
   transform: skewX(-20deg);
   transition: all 0.5s ease;
 }
@@ -274,7 +329,7 @@ input:focus, textarea:focus, select:focus {
 .btn-outline:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Chat Interface */
@@ -319,26 +374,35 @@ input:focus, textarea:focus, select:focus {
 }
 
 /* Markdown styling inside AI messages */
-.message.ai h1, .message.ai h2, .message.ai h3 {
+.message.ai h1,
+.message.ai h2,
+.message.ai h3 {
   margin: 1rem 0 0.5rem 0;
   color: var(--text-primary);
 }
+
 .message.ai p {
   margin-bottom: 0.75rem;
 }
+
 .message.ai p:last-child {
   margin-bottom: 0;
 }
-.message.ai ul, .message.ai ol {
+
+.message.ai ul,
+.message.ai ol {
   margin-bottom: 1rem;
   padding-left: 1.5rem;
 }
+
 .message.ai li {
   margin-bottom: 0.4rem;
 }
+
 .message.ai strong {
   color: var(--secondary-color);
 }
+
 .message.ai hr {
   border: none;
   border-top: 1px solid var(--border-color);
@@ -346,7 +410,9 @@ input:focus, textarea:focus, select:focus {
 }
 
 /* Speech Buttons */
-.speak-btn, .speak-btn-small, .speak-btn-card {
+.speak-btn,
+.speak-btn-small,
+.speak-btn-card {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--secondary-color);
@@ -358,7 +424,9 @@ input:focus, textarea:focus, select:focus {
   border-radius: 50%;
 }
 
-.speak-btn:hover, .speak-btn-small:hover, .speak-btn-card:hover {
+.speak-btn:hover,
+.speak-btn-small:hover,
+.speak-btn-card:hover {
   background: var(--primary-color);
   color: white;
   transform: scale(1.1);
@@ -396,23 +464,51 @@ input:focus, textarea:focus, select:focus {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
   animation: fadeIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-.delay-1 { animation-delay: 0.1s; opacity: 0; }
-.delay-2 { animation-delay: 0.2s; opacity: 0; }
-.delay-3 { animation-delay: 0.3s; opacity: 0; }
-.delay-4 { animation-delay: 0.4s; opacity: 0; }
+.delay-1 {
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+.delay-2 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.delay-3 {
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+.delay-4 {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
+
 .animate-spin {
   animation: spin 1s linear infinite;
 }
@@ -420,7 +516,10 @@ input:focus, textarea:focus, select:focus {
 /* Settings Modal */
 .settings-panel {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(12px);
   display: flex;
@@ -468,7 +567,8 @@ input:focus, textarea:focus, select:focus {
   transform: rotateY(180deg);
 }
 
-.flashcard-front, .flashcard-back {
+.flashcard-front,
+.flashcard-back {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -485,7 +585,7 @@ input:focus, textarea:focus, select:focus {
 
 .flashcard-front {
   background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .flashcard-back {
@@ -501,8 +601,9 @@ input:focus, textarea:focus, select:focus {
   margin-bottom: 0.5rem;
   background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 .word-pinyin {
@@ -528,9 +629,21 @@ input:focus, textarea:focus, select:focus {
 
 .vocab-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   margin-top: 2rem;
+}
+
+@media (max-width: 1200px) {
+  .vocab-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .vocab-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Responsive Design for Mobile (Android/iOS) */
@@ -538,37 +651,38 @@ input:focus, textarea:focus, select:focus {
   .app-container {
     padding: 1rem;
   }
-  
+
   .header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
     margin-bottom: 1.5rem;
   }
-  
+
   h1 {
     font-size: 2rem;
   }
-  
+
   .glass-card {
     padding: 1.25rem;
     border-radius: 16px;
   }
-  
+
   .feature-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .feature-card {
     padding: 1.5rem;
   }
 
   .chat-container {
-    height: 70vh; /* Adjust height for mobile screens */
+    height: 70vh;
+    /* Adjust height for mobile screens */
     padding: 1rem;
   }
-  
+
   .message {
     max-width: 90%;
     padding: 1rem;
@@ -580,11 +694,11 @@ input:focus, textarea:focus, select:focus {
     flex-direction: column;
     width: 100%;
   }
-  
+
   .word-hanzi {
     font-size: 3.5rem;
   }
-  
+
   .flashcard-container {
     height: 280px;
   }
