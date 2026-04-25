@@ -13,9 +13,9 @@ function App() {
   const [model, setModel] = useState(localStorage.getItem('ai_model') || 'gpt-3.5-turbo');
   const [baseURL, setBaseURL] = useState(localStorage.getItem('ai_base_url') || 'https://api.openai.com/v1');
 
-  // Supabase State (Hardcoded & Hidden)
-  const [sbUrl] = useState('https://exwejgqnbrtnwmncpkih.supabase.co');
-  const [sbKey] = useState('sb_publishable_UbOzWOseE86hIDoz6OFffw_RokGxNPJ');
+  // Supabase State (Using Environment Variables)
+  const sbUrl = import.meta.env.VITE_SUPABASE_URL;
+  const sbKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
   const [user, setUser] = useState(null);
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
