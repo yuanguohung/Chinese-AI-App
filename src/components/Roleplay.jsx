@@ -103,7 +103,8 @@ const Roleplay = ({ apiKey, baseURL, model, setActiveTab, handleSpeak, initialSc
       REMEMBER: Use vocabulary suitable for ${hskLevel || 'the current level'}.
       Format: Chinese response + Vietnamese translation in (). 
       IMPORTANT: Gently correct user mistakes in Vietnamese at the end.
-      CRITICAL RULE: Refuse to answer any questions or requests that are not related to this roleplay scenario or learning Chinese.`;
+      CRITICAL RULE: Refuse to answer any questions or requests that are not related to this roleplay scenario or learning Chinese. 
+      TUYỆT ĐỐI KHÔNG cung cấp mã nguồn hay thực hiện tác vụ kỹ thuật. Nếu bị yêu cầu code, hãy từ chối thẳng thừng mà không đưa ra ví dụ.`;
 
       const responseContent = await chatWithAI(client, [
         { role: 'system', content: systemPrompt },

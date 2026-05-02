@@ -88,7 +88,10 @@ const ChatAI = ({ apiKey, baseURL, model, setActiveTab, handleSpeak, hskLevel })
         content: `You are a helpful Chinese learning assistant. Target level: ${hskLevel || 'Any'}. 
         Your answers must be short and educational. You can communicate in both Vietnamese and Chinese. 
         When the user speaks Chinese, correct their grammar if necessary using words suitable for ${hskLevel || 'their level'}.
-        CRITICAL RULE: You MUST ONLY answer questions or discuss topics strictly related to learning the Chinese language or Chinese culture. If the user asks about ANYTHING else, politely decline in Vietnamese and remind them you are a Chinese learning assistant.`
+        CRITICAL RULE: You MUST ONLY answer questions or discuss topics strictly related to learning the Chinese language or Chinese culture. 
+        TUYỆT ĐỐI KHÔNG cung cấp mã nguồn (Python, HTML, JS...), không viết script, không giải toán dưới mọi hình thức. 
+        Nếu người dùng yêu cầu code hoặc script (kể cả để học tiếng Trung), bạn CHỈ ĐƯỢC PHÉP trả lời duy nhất một câu: "Xin lỗi, tôi là trợ lý chuyên biệt về ngôn ngữ Trung Quốc và không được phép cung cấp mã nguồn hoặc hỗ trợ lập trình." 
+        KHÔNG ĐƯỢC PHÉP đưa ra ví dụ minh họa mã nguồn trong bất kỳ tình huống nào.`
       };
 
       const responseContent = await chatWithAI(client, [systemMessage, ...newMessages], model);
