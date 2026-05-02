@@ -50,12 +50,28 @@ const Quiz = ({ vocabHistory, setActiveTab, handleSpeak }) => {
     generateQuiz();
   }, []);
 
+  const playSound = (type) => {
+    const soundUrls = {
+      correct: 'https://assets.mixkit.co/active_storage/sfx/600/600-preview.mp3',
+      wrong: 'https://assets.mixkit.co/active_storage/sfx/601/601-preview.mp3',
+      finish: 'https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3'
+    };
+    const audio = new Audio(soundUrls[type]);
+    audio.volume = 0.4;
+    audio.play().catch(e => console.log('Audio play blocked:', e));
+  };
+
   const handleQuizAnswer = (answer) => {
     if (selectedAnswer) return;
 
     setSelectedAnswer(answer);
-    if (answer === quizQuestions[currentQuizIndex].correctAnswer) {
+    const isCorrect = answer === quizQuestions[currentQuizIndex].correctAnswer;
+    
+    if (isCorrect) {
       setQuizScore(prev => prev + 1);
+      playSound('correct');
+    } else {
+      playSound('wrong');
     }
 
     setTimeout(() => {
@@ -64,6 +80,7 @@ const Quiz = ({ vocabHistory, setActiveTab, handleSpeak }) => {
         setSelectedAnswer(null);
       } else {
         setIsQuizFinished(true);
+        playSound('finish');
       }
     }, 1500);
   };
@@ -107,7 +124,7 @@ const Quiz = ({ vocabHistory, setActiveTab, handleSpeak }) => {
             {quizQuestions[currentQuizIndex].options.map((opt, idx) => {
               let btnClass = "quiz-option";
               if (selectedAnswer) {
-                if (opt === quizQuestions[currentQuizIndex].correctAnswer) {
+                if (opt.trim() === quizQuestions[currentQuizIndex].correctAnswer.trim()) {
                   btnClass += " correct";
                 } else if (opt === selectedAnswer) {
                   btnClass += " wrong";
@@ -120,7 +137,21 @@ const Quiz = ({ vocabHistory, setActiveTab, handleSpeak }) => {
                   className={btnClass}
                   onClick={() => handleQuizAnswer(opt)}
                   disabled={!!selectedAnswer}
+                  style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}
                 >
+                  <span style={{ 
+                    width: '32px', 
+                    height: '32px', 
+                    borderRadius: '50%', 
+                    background: 'rgba(255,255,255,0.1)', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    fontWeight: 'bold',
+                    flexShrink: 0
+                  }}>
+                    {String.fromCharCode(65 + idx)}
+                  </span>
                   {opt}
                 </button>
               );

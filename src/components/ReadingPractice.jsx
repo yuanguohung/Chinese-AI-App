@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, Loader2, Volume2, BookOpen, Eye, EyeOff } from 'lucide-react';
 import { createAiClient, chatWithAI } from '../services/aiService';
 
-const ReadingPractice = ({ vocabHistory, setActiveTab, handleSpeak, apiKey, baseURL, model }) => {
+const ReadingPractice = ({ vocabHistory, setActiveTab, handleSpeak, apiKey, baseURL, model, hskLevel }) => {
   const [readingData, setReadingData] = useState(null);
   const [isGeneratingReading, setIsGeneratingReading] = useState(false);
   const [showPinyin, setShowPinyin] = useState(false);
@@ -27,11 +27,12 @@ const ReadingPractice = ({ vocabHistory, setActiveTab, handleSpeak, apiKey, base
       const shuffledVocab = [...vocabHistory].sort(() => 0.5 - Math.random());
       const selectedWords = shuffledVocab.slice(0, 10).map(w => w.hanzi).join(', ');
 
-      const prompt = `Write a short, engaging Chinese story (about 100-150 words) that includes as many of these words as possible: ${selectedWords}.
-      IMPORTANT: Ensure the Chinese text is highly natural, idiomatic, and written exactly how a native Chinese speaker would write it. Avoid awkward, rigid, or AI-like phrasing. The story should flow smoothly and make logical sense.
+      const prompt = `Write a short, engaging Chinese story (about 100-150 words) suitable for ${hskLevel || 'the current level'} learners.
+      Include as many of these words as possible: ${selectedWords}.
+      IMPORTANT: Ensure the Chinese text is highly natural, idiomatic, and written exactly how a native Chinese speaker would write it at the ${hskLevel || ''} level.
       Respond STRICTLY in JSON format with exactly these keys:
       "title": "Story title in Chinese",
-      "content_hanzi": "The story in Chinese characters only (must be natural and native-like)",
+      "content_hanzi": "The story in Chinese characters only",
       "content_pinyin": "Pinyin for the entire story",
       "translation": "Vietnamese translation of the story",
       "questions": [
@@ -156,7 +157,7 @@ const ReadingPractice = ({ vocabHistory, setActiveTab, handleSpeak, apiKey, base
                   {q.options.map((opt, idx) => {
                     let btnClass = "quiz-option";
                     if (readingAnswers[qIndex]) {
-                      if (opt === q.answer) {
+                      if (opt.trim() === q.answer.trim()) {
                         btnClass += " correct";
                       } else if (opt === readingAnswers[qIndex]) {
                         btnClass += " wrong";
@@ -168,8 +169,21 @@ const ReadingPractice = ({ vocabHistory, setActiveTab, handleSpeak, apiKey, base
                         className={btnClass}
                         onClick={() => handleReadingAnswer(qIndex, opt)}
                         disabled={!!readingAnswers[qIndex]}
-                        style={{ textAlign: 'left', padding: '1rem' }}
+                        style={{ textAlign: 'left', padding: '1rem', display: 'flex', gap: '1rem', alignItems: 'center' }}
                       >
+                        <span style={{ 
+                          width: '32px', 
+                          height: '32px', 
+                          borderRadius: '50%', 
+                          background: 'rgba(255,255,255,0.1)', 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          justifyContent: 'center',
+                          fontWeight: 'bold',
+                          flexShrink: 0
+                        }}>
+                          {String.fromCharCode(65 + idx)}
+                        </span>
                         {opt}
                       </button>
                     );

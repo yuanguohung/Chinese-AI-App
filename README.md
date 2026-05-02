@@ -1,6 +1,6 @@
 # 🏮 AI Chinese Learning Assistant
 
-Một ứng dụng web học tiếng Trung hiện đại, tích hợp trí tuệ nhân tạo (AI) để giúp bạn nâng cao kỹ năng giao tiếp, từ vựng và ngữ pháp một cách chuyên nghiệp và có hệ thống.
+Một ứng dụng web học tiếng Trung hiện đại, tích hợp trí tuệ nhân tạo (AI) để giúp bạn nâng cao kỹ năng giao tiếp, phát âm, từ vựng và ngữ pháp một cách chuyên nghiệp.
 
 👉 **Live Demo:** [https://chinese-ai-app.vercel.app/](https://chinese-ai-app.vercel.app/)
 
@@ -11,24 +11,24 @@ Một ứng dụng web học tiếng Trung hiện đại, tích hợp trí tuệ
 
 ## ✨ Tính năng nổi bật
 
+- 🎙️ **Luyện Phát Âm (Voice Input)**: Tích hợp Web Speech API cho phép bạn nhập liệu bằng giọng nói tiếng Trung. Đây là cách tuyệt vời để kiểm tra khả năng phát âm của bạn có chính xác hay không.
 - 💬 **Luyện Giao Tiếp AI**: Trò chuyện trực tiếp với trợ lý AI. AI sẽ tự động sửa lỗi và phản hồi bằng cả tiếng Trung lẫn tiếng Việt.
 - 🎭 **Mô Phỏng Tình Huống**: Đóng vai trong các kịch bản thực tế (Mua sắm, Sân bay, Nhà hàng...). AI đóng vai đối tác, có sẵn câu mở đầu và hỗ trợ sửa lỗi ngữ pháp trực tiếp.
 - 🔍 **Từ Điển Thông Minh**: Tra cứu từ vựng với phân tích Hán tự chuyên sâu (bộ thủ, nguồn gốc) và các ví dụ thực tế do AI cung cấp.
-- 📊 **Thống Kê Nâng Cao**: Theo dõi tiến trình học tập qua biểu đồ trực quan. Phân tích phân bổ chủ đề từ vựng và xu hướng học tập trong tuần.
-- 📖 **Luyện Đọc Hiểu**: AI tự động viết các đoạn văn ngắn dựa trên chính kho từ vựng bạn đã học để giúp bạn ôn tập hiệu quả.
-- 🧠 **Trắc Nghiệm AI**: Kiểm tra trí nhớ với các câu hỏi ngẫu nhiên được tạo ra từ lịch sử học tập của bạn.
-- 🗃️ **Lưu Trữ Đám Mây**: Tích hợp **Supabase** để lưu trữ lịch sử từ vựng, điểm số và tiến trình học tập của bạn mọi lúc mọi nơi.
-- 🎨 **Giao diện Premium**: Thiết kế Glassmorphism hiện đại, sử dụng phông chữ **Montserrat** và **Manrope** tối ưu cho tiếng Việt và tiếng Trung.
+- 📊 **Thống Kê Nâng Cao**: Theo dõi tiến trình học tập qua biểu đồ trực quan (Recharts). Phân tích phân bổ chủ đề từ vựng và xu hướng học tập hàng tuần.
+- 📖 **Luyện Đọc Hiểu**: AI tự động viết các đoạn văn ngắn dựa trên chính kho từ vựng bạn đã học, kèm câu hỏi trắc nghiệm để kiểm tra mức độ hiểu bài.
+- 🧠 **Trắc Nghiệm AI**: Tự động tạo bài kiểm tra từ vựng 4 đáp án từ lịch sử học tập của cá nhân bạn.
+- 🗃️ **Lưu Trữ Đám Mây**: Tích hợp **Supabase** để lưu trữ lịch sử, điểm số và tiến trình học tập an toàn.
+- 🎨 **Giao diện Premium**: Thiết kế Glassmorphism hiện đại, tối ưu cho cả máy tính và thiết bị di động.
 
 ## 🛠️ Công nghệ sử dụng
 
-- **Frontend**: React.js (Hooks, Context API), Vite
-- **Styling**: Vanilla CSS (Custom Glassmorphism Design System)
-- **Backend/Database**: Supabase (Auth & PostgreSQL)
-- **AI Integration**: OpenAI SDK (Tương thích với Groq, OpenRouter, Glhf.chat, DeepSeek...)
-- **Data Visualization**: Recharts
-- **Icons**: Lucide React
-- **Typography**: Montserrat, Manrope (Google Fonts)
+- **Frontend**: React.js 18 (Vite), Modular Component-based Architecture.
+- **Styling**: Vanilla CSS (Custom Glassmorphism Design System) + Keyframe Animations.
+- **Backend/Database**: Supabase (PostgreSQL, Auth & Row Level Security).
+- **AI Integration**: OpenAI SDK (Hỗ trợ cấu hình Custom Base URL để dùng các provider như Groq, OpenRouter, Glhf.chat, DeepSeek...).
+- **Speech**: Web Speech API (SpeechRecognition & SpeechSynthesis).
+- **Visualization**: Recharts.
 
 ## 🚀 Cài đặt và Chạy thử
 
@@ -36,7 +36,6 @@ Một ứng dụng web học tiếng Trung hiện đại, tích hợp trí tuệ
 Đảm bảo bạn đã cài đặt [Node.js](https://nodejs.org/).
 
 ### 2. Cài đặt dependencies
-Mở Terminal trong thư mục dự án và chạy:
 ```bash
 npm install
 ```
@@ -46,8 +45,21 @@ npm install
 npm run dev
 ```
 
-### 4. Cấu hình API & Database
-- Nhấn vào nút **Cài đặt** ở góc trên bên phải để cấu hình API Key cho AI.
-- Hệ thống yêu cầu kết nối với dự án Supabase cá nhân để lưu trữ dữ liệu. Cấu hình trong file `src/services/supabaseClient.js`.
+> 💡 **Lưu ý (Windows PowerShell):** Nếu gặp lỗi bảo mật thực thi script, hãy dùng:
+> ```bash
+> cmd /c npm run dev
+> ```
+
+### 4. Cấu hình Backend (Supabase)
+Dự án sử dụng Supabase để lưu trữ. Bạn cần tạo các bảng sau:
+- `vocab_history`: Lưu trữ từ vựng (columns: `hanzi`, `pinyin`, `meaning`, `example`, `topic`, `user_id`).
 
 
+### 5. Cấu hình AI
+Nhấn vào icon **Cài đặt** trên giao diện ứng dụng để nhập:
+- **API Key**
+- **Model ID** (ví dụ: gpt-3.5-turbo, deepseek-chat...)
+- **Base URL** (nếu dùng provider khác OpenAI)
+
+---
+*Dự án được phát triển với mục tiêu cá nhân hóa lộ trình học tiếng Trung thông qua sức mạnh của AI.* 🏮

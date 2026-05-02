@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronLeft, Loader2, Send, Volume2 } from 'lucide-react';
+import { ChevronLeft, Loader2, Send, Volume2, Mic } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { createAiClient, chatWithAI } from '../services/aiService';
 
@@ -12,7 +12,7 @@ const scenarios = [
   { id: 6, title: 'Hỏi đường', icon: '🗺️', aiRole: 'Người dân địa phương', userRole: 'Khách du lịch', description: 'Hỏi đường đến các địa danh nổi tiếng.', openingLine: '你好，请问去天安门怎么走？(Chào bạn, cho hỏi đường đi Thiên An Môn đi thế nào?)' },
 ];
 
-const Roleplay = ({ apiKey, baseURL, model, setActiveTab, handleSpeak, initialScenario }) => {
+const Roleplay = ({ apiKey, baseURL, model, setActiveTab, handleSpeak, initialScenario, hskLevel }) => {
   const [roleplayScenario, setRoleplayScenario] = useState(initialScenario || null);
   const [isRoleplayLoading, setIsRoleplayLoading] = useState(false);
   const [rpMessages, setRpMessages] = useState(
@@ -20,10 +20,62 @@ const Roleplay = ({ apiKey, baseURL, model, setActiveTab, handleSpeak, initialSc
   );
   const [rpInput, setRpInput] = useState('');
   const messagesEndRef = useRef(null);
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [rpMessages]);
+
+  useEffect(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.lang = 'zh-CN';
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+
+      recognitionRef.current.onstart = () => setIsListening(true);
+      recognitionRef.current.onend = () => setIsListening(false);
+      
+      recognitionRef.current.onresult = (event) => {
+        let finalTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          }
+        }
+        if (finalTranscript) {
+          setRpInput(prev => (prev ? prev + ' ' : '') + finalTranscript);
+        }
+      };
+
+      recognitionRef.current.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        setIsListening(false);
+        if(event.error === 'not-allowed') {
+          alert('Vui lòng cấp quyền sử dụng microphone trong trình duyệt.');
+        }
+      };
+    }
+  }, []);
+
+  const handleMicClick = () => {
+    if (!recognitionRef.current) {
+      alert("Trình duyệt của bạn không hỗ trợ nhận diện giọng nói. Vui lòng sử dụng Google Chrome hoặc Edge trên máy tính.");
+      return;
+    }
+
+    if (isListening) {
+      recognitionRef.current.stop();
+    } else {
+      try {
+        recognitionRef.current.start();
+      } catch (err) {
+        console.error("Microphone start error:", err);
+      }
+    }
+  };
 
   useEffect(() => {
     if (initialScenario && rpMessages.length === 0) {
@@ -45,9 +97,11 @@ const Roleplay = ({ apiKey, baseURL, model, setActiveTab, handleSpeak, initialSc
     try {
       const client = createAiClient(apiKey, baseURL);
       const systemPrompt = `CONTINUE the roleplay as ${roleplayScenario.aiRole}.
+      Target HSK Level: ${hskLevel || 'Any'}.
       Scenario: ${roleplayScenario.title}. 
       User role: ${roleplayScenario.userRole}.
-      REMEMBER: Chinese response + Vietnamese translation in (). 
+      REMEMBER: Use vocabulary suitable for ${hskLevel || 'the current level'}.
+      Format: Chinese response + Vietnamese translation in (). 
       IMPORTANT: Gently correct user mistakes in Vietnamese at the end.
       CRITICAL RULE: Refuse to answer any questions or requests that are not related to this roleplay scenario or learning Chinese.`;
 
@@ -131,9 +185,24 @@ const Roleplay = ({ apiKey, baseURL, model, setActiveTab, handleSpeak, initialSc
       </div>
 
       <form className="chat-input-area" onSubmit={handleRpSendMessage}>
+        <button
+          type="button"
+          className="btn"
+          onClick={handleMicClick}
+          disabled={isRoleplayLoading}
+          style={{ 
+            padding: '0.75rem', 
+            background: isListening ? 'rgba(239, 68, 68, 0.2)' : 'transparent',
+            borderColor: isListening ? '#ef4444' : 'var(--border-color)', 
+            color: isListening ? '#ef4444' : 'var(--text-secondary)' 
+          }}
+          title="Nhập bằng giọng nói (Tiếng Trung)"
+        >
+          <Mic size={20} className={isListening ? "animate-pulse" : ""} />
+        </button>
         <input
           type="text"
-          placeholder="Nhập tin nhắn..."
+          placeholder="Nhập câu trả lời bằng tiếng Trung..."
           value={rpInput}
           onChange={(e) => setRpInput(e.target.value)}
           disabled={isRoleplayLoading}

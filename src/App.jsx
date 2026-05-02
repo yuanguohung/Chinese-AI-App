@@ -17,8 +17,9 @@ function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [apiKey, setApiKey] = useState(localStorage.getItem('ai_api_key') || '');
-  const [model, setModel] = useState(localStorage.getItem('ai_model') || 'gpt-3.5-turbo');
-  const [baseURL, setBaseURL] = useState(localStorage.getItem('ai_base_url') || 'https://api.openai.com/v1');
+  const [model, setModel] = useState(localStorage.getItem('ai_model') || 'qwen/qwen-2.5-32b');
+  const [baseURL, setBaseURL] = useState(localStorage.getItem('ai_base_url') || 'https://api.groq.com/openai/v1');
+  const [hskLevel, setHskLevel] = useState(localStorage.getItem('ai_hsk_level') || 'HSK 3');
 
   // Supabase State (Using Environment Variables)
   const sbUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -73,6 +74,7 @@ function App() {
     localStorage.setItem('ai_api_key', apiKey);
     localStorage.setItem('ai_model', model);
     localStorage.setItem('ai_base_url', baseURL);
+    localStorage.setItem('ai_hsk_level', hskLevel);
     setIsSettingsOpen(false);
   };
 
@@ -112,6 +114,18 @@ function App() {
   const handleLogout = async () => {
     const supabase = getSupabase(sbUrl, sbKey);
     await supabase?.auth.signOut();
+    
+    // Xóa các cấu hình AI khỏi localStorage và State
+    localStorage.removeItem('ai_api_key');
+    localStorage.removeItem('ai_model');
+    localStorage.removeItem('ai_base_url');
+    localStorage.removeItem('ai_hsk_level');
+    
+    setApiKey('');
+    setModel('qwen/qwen-2.5-32b');
+    setBaseURL('https://api.groq.com/openai/v1');
+    setHskLevel('HSK 3');
+    setActiveTab('dashboard');
   };
 
   const fetchVocabHistory = async (silent = false) => {
@@ -251,6 +265,22 @@ function App() {
             </div>
 
             <div className="input-group">
+              <label>Cấp độ HSK mục tiêu</label>
+              <select 
+                value={hskLevel} 
+                onChange={(e) => setHskLevel(e.target.value)}
+                style={{ background: 'rgba(0,0,0,0.2)', color: 'white', padding: '1rem', borderRadius: '16px', border: '1px solid var(--border-color)' }}
+              >
+                {['HSK 1', 'HSK 2', 'HSK 3', 'HSK 4', 'HSK 5', 'HSK 6'].map(lvl => (
+                  <option key={lvl} value={lvl} style={{ background: '#18181b' }}>{lvl}</option>
+                ))}
+              </select>
+              <small style={{ color: 'var(--text-secondary)', marginTop: '0.5rem', display: 'block' }}>
+                AI sẽ ưu tiên sử dụng từ vựng và cấu trúc phù hợp với cấp độ này.
+              </small>
+            </div>
+
+            <div className="input-group">
               <label>Base URL (Tuỳ chọn)</label>
               <input
                 type="text"
@@ -258,9 +288,6 @@ function App() {
                 value={baseURL}
                 onChange={(e) => setBaseURL(e.target.value)}
               />
-              <small style={{ color: 'var(--text-secondary)', marginTop: '0.5rem', display: 'block' }}>
-                Key được lưu trữ an toàn trong trình duyệt (localStorage).
-              </small>
             </div>
 
             <button className="btn" style={{ width: '100%' }} onClick={handleSaveSettings}>
@@ -508,6 +535,7 @@ function App() {
                 model={model}
                 setActiveTab={setActiveTab}
                 handleSpeak={handleSpeak}
+                hskLevel={hskLevel}
               />
             )}
 
@@ -553,6 +581,7 @@ function App() {
                 apiKey={apiKey}
                 baseURL={baseURL}
                 model={model}
+                hskLevel={hskLevel}
               />
             )}
             {/* Stats Tab */}
@@ -708,6 +737,7 @@ function App() {
                 model={model}
                 setActiveTab={setActiveTab}
                 handleSpeak={handleSpeak}
+                hskLevel={hskLevel}
               />
             )}
           </main>

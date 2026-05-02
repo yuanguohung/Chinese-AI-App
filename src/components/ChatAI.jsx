@@ -1,15 +1,67 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronLeft, Volume2, Loader2, Send } from 'lucide-react';
+import { ChevronLeft, Volume2, Loader2, Send, Mic } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { createAiClient, chatWithAI } from '../services/aiService';
 
-const ChatAI = ({ apiKey, baseURL, model, setActiveTab, handleSpeak }) => {
+const ChatAI = ({ apiKey, baseURL, model, setActiveTab, handleSpeak, hskLevel }) => {
   const [chatInput, setChatInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([
     { role: 'assistant', content: '你好！Tôi là trợ lý AI học tiếng Trung của bạn. Bạn muốn luyện tập chủ đề gì hôm nay?' }
   ]);
   const messagesEndRef = useRef(null);
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef(null);
+
+  useEffect(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.lang = 'zh-CN'; // Nhận diện tiếng Trung
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+
+      recognitionRef.current.onstart = () => setIsListening(true);
+      recognitionRef.current.onend = () => setIsListening(false);
+      
+      recognitionRef.current.onresult = (event) => {
+        let finalTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          }
+        }
+        if (finalTranscript) {
+          setChatInput(prev => (prev ? prev + ' ' : '') + finalTranscript);
+        }
+      };
+
+      recognitionRef.current.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        setIsListening(false);
+        if(event.error === 'not-allowed') {
+          alert('Vui lòng cấp quyền sử dụng microphone trong trình duyệt.');
+        }
+      };
+    }
+  }, []);
+
+  const handleMicClick = () => {
+    if (!recognitionRef.current) {
+      alert("Trình duyệt của bạn không hỗ trợ nhận diện giọng nói. Vui lòng sử dụng Google Chrome hoặc Edge trên máy tính.");
+      return;
+    }
+
+    if (isListening) {
+      recognitionRef.current.stop();
+    } else {
+      try {
+        recognitionRef.current.start();
+      } catch (err) {
+        console.error("Microphone start error:", err);
+      }
+    }
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -33,7 +85,10 @@ const ChatAI = ({ apiKey, baseURL, model, setActiveTab, handleSpeak }) => {
       const client = createAiClient(apiKey, baseURL);
       const systemMessage = {
         role: 'system',
-        content: 'You are a helpful Chinese learning assistant. Your answers must be short and educational. You can communicate in both Vietnamese and Chinese. When the user speaks Chinese, correct their grammar if necessary. CRITICAL RULE: You MUST ONLY answer questions or discuss topics strictly related to learning the Chinese language or Chinese culture. If the user asks about ANYTHING else (e.g., coding, math, general knowledge, etc.), politely decline in Vietnamese, remind them that you are strictly a Chinese learning assistant, and ask them to return to the topic of studying Chinese.'
+        content: `You are a helpful Chinese learning assistant. Target level: ${hskLevel || 'Any'}. 
+        Your answers must be short and educational. You can communicate in both Vietnamese and Chinese. 
+        When the user speaks Chinese, correct their grammar if necessary using words suitable for ${hskLevel || 'their level'}.
+        CRITICAL RULE: You MUST ONLY answer questions or discuss topics strictly related to learning the Chinese language or Chinese culture. If the user asks about ANYTHING else, politely decline in Vietnamese and remind them you are a Chinese learning assistant.`
       };
 
       const responseContent = await chatWithAI(client, [systemMessage, ...newMessages], model);
@@ -84,9 +139,24 @@ const ChatAI = ({ apiKey, baseURL, model, setActiveTab, handleSpeak }) => {
       </div>
 
       <form className="chat-input-area" onSubmit={handleSendMessage}>
+        <button
+          type="button"
+          className="btn"
+          onClick={handleMicClick}
+          disabled={isLoading}
+          style={{ 
+            padding: '0.75rem', 
+            background: isListening ? 'rgba(239, 68, 68, 0.2)' : 'transparent',
+            borderColor: isListening ? '#ef4444' : 'var(--border-color)', 
+            color: isListening ? '#ef4444' : 'var(--text-secondary)' 
+          }}
+          title="Nhập bằng giọng nói (Tiếng Trung)"
+        >
+          <Mic size={20} className={isListening ? "animate-pulse" : ""} />
+        </button>
         <input
           type="text"
-          placeholder="Nhập tin nhắn bằng tiếng Trung hoặc tiếng Việt..."
+          placeholder="Nhập tin nhắn..."
           value={chatInput}
           onChange={(e) => setChatInput(e.target.value)}
           disabled={isLoading}
