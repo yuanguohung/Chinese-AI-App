@@ -581,6 +581,7 @@ select:focus {
   justify-content: center;
   text-align: center;
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 }
 
 .flashcard-front {
@@ -593,6 +594,7 @@ select:focus {
   border: 1px solid rgba(236, 72, 153, 0.4);
   transform: rotateY(180deg);
   backdrop-filter: blur(10px);
+  overflow-y: auto;
 }
 
 .word-hanzi {
@@ -616,8 +618,9 @@ select:focus {
 .word-meaning {
   font-size: 1.8rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: #fff;
+  word-break: break-word;
 }
 
 .word-example {
@@ -625,6 +628,7 @@ select:focus {
   color: var(--text-secondary);
   font-style: italic;
   line-height: 1.6;
+  word-break: break-word;
 }
 
 .vocab-grid {
@@ -696,11 +700,38 @@ select:focus {
   }
 
   .word-hanzi {
-    font-size: 3.5rem;
+    font-size: 2.8rem;
+  }
+
+  .word-pinyin {
+    font-size: 1.2rem;
+  }
+
+  .word-meaning {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .word-example {
+    font-size: 0.9rem;
+    line-height: 1.4;
   }
 
   .flashcard-container {
-    height: 280px;
+    height: 240px;
+  }
+
+  .flashcard-front,
+  .flashcard-back {
+    padding: 1.2rem;
+    border-radius: 16px;
+  }
+
+  .speak-btn-card {
+    width: 28px;
+    height: 28px;
+    top: 0.6rem;
+    right: 0.6rem;
   }
 }
 
